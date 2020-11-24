@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "690086285903",
+    "firebase_url": "https://medifacts-267a1.firebaseio.com",
+    "project_id": "medifacts-267a1",
+    "storage_bucket": "medifacts-267a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690086285903:android:431d413f59d563ae5dd03a",
+        "android_client_info": {
+          "package_name": "com.example.medifacts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690086285903-r02jstfcjlsv8hmo6a9jslk2dgnav7un.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy-pJtVqi1AlYVnBEp-3rAwXyXQ57s2es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690086285903-r02jstfcjlsv8hmo6a9jslk2dgnav7un.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
