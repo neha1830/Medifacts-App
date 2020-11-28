@@ -1,15 +1,19 @@
 package com.example.medifacts.ui.home;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -50,6 +54,14 @@ public class HomeFragment extends Fragment {
     final private long PERIOD_TIME = 3000;
     ///// Banner Slider
 
+    ///upload prescription
+    private ImageView uploadPrescription;
+    private ConstraintLayout uploadPrescriptionContainer;
+
+    ///upload prescription
+
+
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -79,24 +91,27 @@ public class HomeFragment extends Fragment {
         ////Banner Slider
         bannerSliderViewPager = view.findViewById(R.id.banner_slider_view_pager);
         sliderModelList = new ArrayList<SliderModel>();
-        sliderModelList.add(new SliderModel(R.mipmap.red_email));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher));
 
-        sliderModelList.add(new SliderModel(R.mipmap.custom_error));
-        sliderModelList.add(new SliderModel(R.mipmap.cart_black));
-        sliderModelList.add(new SliderModel(R.mipmap.profile_placeholder));
-        sliderModelList.add(new SliderModel(R.mipmap.home_icon));
-        sliderModelList.add(new SliderModel(R.mipmap.green_email));
-        sliderModelList.add(new SliderModel(R.mipmap.red_email));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher));
-        sliderModelList.add(new SliderModel(R.mipmap.banner));
+        sliderModelList.add(new SliderModel(R.mipmap.red_email,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.custom_error,"#077AE4"));
 
-        sliderModelList.add(new SliderModel(R.mipmap.custom_error));
-        sliderModelList.add(new SliderModel(R.mipmap.cart_black));
+        sliderModelList.add(new SliderModel(R.mipmap.cart_black,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.profile_placeholder,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.home_icon,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.green_email,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.red_email,"#077AE4"));
 
-        bannerSliderViewPager.setAdapter(new SliderAdapter(sliderModelList,bannerSliderViewPager));
+        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.custom_error,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.cart_black,"#077AE4"));
+
+
+        SliderAdapter sliderAdapter = new SliderAdapter(sliderModelList);
+        bannerSliderViewPager.setAdapter(sliderAdapter);
         bannerSliderViewPager.setClipToPadding(false);
         bannerSliderViewPager.setPageTransformer(new MarginPageTransformer(20));
+        bannerSliderViewPager.setCurrentItem(currentPage);
 
         ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -111,7 +126,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_IDLE){
+                if (state == ViewPager2.SCROLL_STATE_IDLE){
                     pageLooper();
                 }
             }
@@ -120,6 +135,7 @@ public class HomeFragment extends Fragment {
         startBannerSlideShow();
 
         bannerSliderViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 pageLooper();
@@ -132,6 +148,14 @@ public class HomeFragment extends Fragment {
         });
 
         ////Banner Slider
+
+        ///upload prescription
+        uploadPrescription = view.findViewById(R.id.upload_prescription);
+        uploadPrescriptionContainer = view.findViewById(R.id.upload_prescription_strip_container);
+
+        uploadPrescription.setImageResource(R.mipmap.upload_prescription);
+        uploadPrescriptionContainer.setBackgroundColor(Color.parseColor("#facb5c"));
+        ///upload prescription
         return view;
     }
 

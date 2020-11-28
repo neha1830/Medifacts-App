@@ -1,11 +1,14 @@
 package com.example.medifacts;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -15,9 +18,8 @@ import java.util.List;
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
     private List<SliderModel> sliderModelList;
 
-    public SliderAdapter(List<SliderModel> sliderModelList, ViewPager2 bannerSliderViewPager) {
+    public SliderAdapter(List<SliderModel> sliderModelList) {
         this.sliderModelList = sliderModelList;
-        this.bannerSliderViewPager = bannerSliderViewPager;
     }
 
     private ViewPager2 bannerSliderViewPager;
@@ -37,6 +39,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @Override
     public void onBindViewHolder(@NonNull SliderAdapter.SliderViewHolder holder, int position) {
         holder.setBanner(sliderModelList.get(position));
+        holder.setBannerContainer(sliderModelList.get(position));
     }
 
     @Override
@@ -46,12 +49,17 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     class SliderViewHolder extends RecyclerView.ViewHolder {
         private ImageView banner;
+        private ConstraintLayout bannerContainer;
         public SliderViewHolder(@NonNull View itemView) {
             super(itemView);
             banner = itemView.findViewById(R.id.banner_slide);
+            bannerContainer = itemView.findViewById(R.id.banner_container);
         }
         void setBanner(SliderModel sliderModel){
             banner.setImageResource(sliderModel.getBanner());
+        }
+        void setBannerContainer(SliderModel sliderModel){
+            bannerContainer.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(sliderModel.getBackgroundColor())));
         }
     }
 
