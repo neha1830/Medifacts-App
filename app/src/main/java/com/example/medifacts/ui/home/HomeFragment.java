@@ -8,23 +8,23 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.medifacts.CategoryAdapter;
 import com.example.medifacts.CategoryModel;
+import com.example.medifacts.HorizontalProductScrollAdapter;
+import com.example.medifacts.HorizontalProductScrollModel;
 import com.example.medifacts.R;
 import com.example.medifacts.SliderAdapter;
 import com.example.medifacts.SliderModel;
@@ -59,6 +59,14 @@ public class HomeFragment extends Fragment {
     private ConstraintLayout uploadPrescriptionContainer;
 
     ///upload prescription
+
+    //horizontalProduct Layout
+    private TextView horizontalLayoutTitle;
+    private Button horizontalViewAllButton;
+    private RecyclerView horizontalRecyclerView;
+
+
+    //horizontalProduct Layout
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -156,6 +164,36 @@ public class HomeFragment extends Fragment {
         uploadPrescription.setImageResource(R.mipmap.upload_prescription);
         uploadPrescriptionContainer.setBackgroundColor(Color.parseColor("#facb5c"));
         ///upload prescription
+
+        //horizontalProduct Layout
+
+        horizontalLayoutTitle = view.findViewById(R.id.horizontal_scroll_layout_title);
+        horizontalViewAllButton = view.findViewById(R.id.horizontal_scroll_viewAll_button);
+        horizontalRecyclerView = view.findViewById(R.id.horizontal_scroll_layout_recyclerView);
+
+        List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.apple,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.green_email,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.red_email,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.my_account,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.cart_black,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.custom_error,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.ic_launcher_round,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.app_icon,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+
+        HorizontalProductScrollAdapter horizontalProductScrollAdapter = new HorizontalProductScrollAdapter(horizontalProductScrollModelList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        horizontalRecyclerView.setLayoutManager(linearLayoutManager);
+
+        horizontalRecyclerView.setAdapter(horizontalProductScrollAdapter);
+        horizontalProductScrollAdapter.notifyDataSetChanged();
+
+
+        //horizontalProduct Layout
+
+
+
         return view;
     }
 

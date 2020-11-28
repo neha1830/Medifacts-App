@@ -24,10 +24,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category_recycler_view">
 
-        <include layout="@layout/sliding_ad_banner" />
+        <include layout="@layout/horizontal_scroll_layout" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,5 +36,15 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <include layout="@layout/upload_prescription_strip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <include layout="@layout/sliding_ad_banner" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

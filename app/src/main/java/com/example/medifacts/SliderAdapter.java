@@ -27,19 +27,18 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @NonNull
     @Override
     public SliderAdapter.SliderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new SliderViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.slider_layout,
-                        parent,
-                        false
-                )
-        );
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout,parent,false);
+//        parent.addView(view,0);
+        return new SliderViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SliderAdapter.SliderViewHolder holder, int position) {
-        holder.setBanner(sliderModelList.get(position));
-        holder.setBannerContainer(sliderModelList.get(position));
+        int resource = sliderModelList.get(position).getBanner();
+        String container = sliderModelList.get(position).getBackgroundColor();
+
+        holder.setBanner(resource);
+        holder.setBannerContainer(container);
     }
 
     @Override
@@ -55,11 +54,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             banner = itemView.findViewById(R.id.banner_slide);
             bannerContainer = itemView.findViewById(R.id.banner_container);
         }
-        void setBanner(SliderModel sliderModel){
-            banner.setImageResource(sliderModel.getBanner());
+        void setBanner(int resource){
+            banner.setImageResource(resource);
         }
-        void setBannerContainer(SliderModel sliderModel){
-            bannerContainer.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(sliderModel.getBackgroundColor())));
+        void setBannerContainer(String container){
+            bannerContainer.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(container)));
         }
     }
 
