@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.medifacts.CategoryAdapter;
 import com.example.medifacts.CategoryModel;
+import com.example.medifacts.GridProductLayoutAdapter;
 import com.example.medifacts.HorizontalProductScrollAdapter;
 import com.example.medifacts.HorizontalProductScrollModel;
 import com.example.medifacts.R;
@@ -192,7 +194,14 @@ public class HomeFragment extends Fragment {
 
         //horizontalProduct Layout
 
+        ///Grid Product Layout
+        TextView gridLayoutTitleSmall = view.findViewById(R.id.grid_product_layout_title_small);
+        TextView gridLayoutTitle = view.findViewById(R.id.grid_product_layout_title);
+        Button gridLayoutViewAllBtn = view.findViewById(R.id.grid_product_layout_viewAll);
+        GridView gridView = view.findViewById(R.id.grid_product_layout_gridView);
 
+        gridView.setAdapter(new GridProductLayoutAdapter(horizontalProductScrollModelList));
+        ///Grid Product Layout
 
         return view;
     }
