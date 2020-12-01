@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         frameLayout = findViewById(R.id.main_framelayout);
-        setFragment(new HomeFragment());
+//        setFragment(new HomeFragment());
     }
 
     @Override
@@ -125,9 +125,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void setFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(frameLayout.getId(),fragment);
-        fragmentTransaction.commit();
-    }
+//    private void setFragment(Fragment fragment){
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(frameLayout.getId(),fragment);
+//        fragmentTransaction.commit();
+//    }
 }

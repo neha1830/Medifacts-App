@@ -74,8 +74,6 @@ public class HomeFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         categoryRecyclerView = view.findViewById(R.id.category_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -120,6 +118,8 @@ public class HomeFragment extends Fragment {
         SliderAdapter sliderAdapter = new SliderAdapter(sliderModelList);
         bannerSliderViewPager.setAdapter(sliderAdapter);
         bannerSliderViewPager.setClipToPadding(false);
+        bannerSliderViewPager.setClipChildren(false);
+        bannerSliderViewPager.setOffscreenPageLimit(3);
         bannerSliderViewPager.setPageTransformer(new MarginPageTransformer(20));
         bannerSliderViewPager.setCurrentItem(currentPage);
 
@@ -195,13 +195,35 @@ public class HomeFragment extends Fragment {
         //horizontalProduct Layout
 
         ///Grid Product Layout
-        TextView gridLayoutTitleSmall = view.findViewById(R.id.grid_product_layout_title_small);
         TextView gridLayoutTitle = view.findViewById(R.id.grid_product_layout_title);
         Button gridLayoutViewAllBtn = view.findViewById(R.id.grid_product_layout_viewAll);
         GridView gridView = view.findViewById(R.id.grid_product_layout_gridView);
 
         gridView.setAdapter(new GridProductLayoutAdapter(horizontalProductScrollModelList));
         ///Grid Product Layout
+
+        ///////////////////
+        RecyclerView testing = view.findViewById(R.id.testing);
+        LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
+        testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        testing.setLayoutManager(testingLayoutManager);
+
+        List<HomeViewModel> homeViewModelList = new ArrayList<>();
+        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
+        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ff0000"));
+//        homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
+        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
+        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ffffff"));
+
+        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
+        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#fff000"));
+
+
+        HomePageAdapter adapter = new HomePageAdapter(homeViewModelList);
+        testing.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        /////////////////////
 
         return view;
     }
