@@ -66,6 +66,7 @@ public class HomeFragment extends Fragment {
     private TextView horizontalLayoutTitle;
     private Button horizontalViewAllButton;
     private RecyclerView horizontalRecyclerView;
+    private List<HorizontalProductScrollModel> horizontalProductScrollModelList;
 
 
     //horizontalProduct Layout
@@ -173,7 +174,7 @@ public class HomeFragment extends Fragment {
         horizontalViewAllButton = view.findViewById(R.id.horizontal_scroll_viewAll_button);
         horizontalRecyclerView = view.findViewById(R.id.horizontal_scroll_layout_recyclerView);
 
-        List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
+        horizontalProductScrollModelList = new ArrayList<>();
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.apple,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.green_email,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.red_email,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
@@ -182,6 +183,7 @@ public class HomeFragment extends Fragment {
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.custom_error,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.ic_launcher_round,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
         horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.app_icon,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.mipmap.ic_launcher_round,"Apple Cider Vinegar","100% Natural Vinegar 500ml","450.00"));
 
         HorizontalProductScrollAdapter horizontalProductScrollAdapter = new HorizontalProductScrollAdapter(horizontalProductScrollModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -211,10 +213,11 @@ public class HomeFragment extends Fragment {
         List<HomeViewModel> homeViewModelList = new ArrayList<>();
         homeViewModelList.add(new HomeViewModel(0,sliderModelList));
         homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ff0000"));
-//        homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
+        homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
         homeViewModelList.add(new HomeViewModel(0,sliderModelList));
         homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ffffff"));
-
+        homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
+        homeViewModelList.add(new HomeViewModel(3,"Deal of the Day",horizontalProductScrollModelList));
         homeViewModelList.add(new HomeViewModel(0,sliderModelList));
         homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#fff000"));
 
