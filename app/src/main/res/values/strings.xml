@@ -13,4 +13,13 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="rating5">5</string>
+    <string name="rating4">4</string>
+    <string name="rating3">3</string>
+    <string name="rating2">2</string>
+    <string name="rating1">1</string>
+    <string name="ratingoverall">4.5</string>
+    <string name="Your_Rating">Your Rating</string>
+    <string name="Ratings">Ratings</string>
+    <string name="totalratings">27 ratings</string>
 </resources>
