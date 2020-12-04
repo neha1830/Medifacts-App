@@ -22,11 +22,7 @@ package com.example.medifacts;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private ViewPager2 productImagesViewPager;
-    private TabLayout viewpagerIndicator;
 
-    private ViewPager2 productDetailsViewpager;
-    private TabLayout productDetailsTabLayout;
     ////Rating Layout
     private LinearLayout rateNowContainer;
     ////
@@ -44,18 +40,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //        productImagesViewPager = findViewById(R.id.product_images_viewpager);
 //        viewpagerIndicator = findViewById(R.id.viewpager_indicator);
         addToWishlistBtn = findViewById(R.id.add_to_wishlist_btn);
-        productDetailsViewpager = findViewById(R.id.product_details_viewpager);
-        productDetailsTabLayout = findViewById(R.id.product_details_tablayout);
-
-
-        List<Integer> productImages = new ArrayList<>();
-        productImages.add(R.drawable.forgot_password_image);
-        productImages.add(R.drawable.star);
-        productImages.add(R.drawable.forgot_password_image);
-        productImages.add(R.drawable.star);
-
-        ProductImagesAdaptor productImagesAdapter = new ProductImagesAdaptor(productImages);
-        productImagesViewPager.setAdapter(productImagesAdapter);
 
         addToWishlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +50,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
                 else{
                     ALREADY_ADDED_TO_WISHLIST=true;
-                    addToWishlistBtn.setSupportImageTintList(getResources().getColorStateList(R.color.colorPrimary));
+                    addToWishlistBtn.setSupportImageTintList(getResources().getColorStateList(R.color.unsuccessRed));
                 }
             }
         });

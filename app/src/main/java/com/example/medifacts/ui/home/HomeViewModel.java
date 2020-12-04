@@ -40,20 +40,20 @@ public class HomeViewModel{
     //Banner Slider
 
     ////////Upload Prescription Strip
-    private int resource;
+    private String  resource;
     private String backgroundColor;
 
-    public HomeViewModel(int type, int resource, String backgroundColor) {
+    public HomeViewModel(int type, String resource, String backgroundColor) {
         this.type = type;
         this.resource = resource;
         this.backgroundColor = backgroundColor;
     }
 
-    public int getResource() {
+    public String getResource() {
         return resource;
     }
 
-    public void setResource(int resource) {
+    public void setResource(String resource) {
         this.resource = resource;
     }
 
