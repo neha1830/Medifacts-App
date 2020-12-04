@@ -1,39 +1,30 @@
 package com.example.medifacts.ui.home;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.MarginPageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.medifacts.CategoryAdapter;
 import com.example.medifacts.CategoryModel;
-import com.example.medifacts.GridProductLayoutAdapter;
-import com.example.medifacts.HorizontalProductScrollAdapter;
 import com.example.medifacts.HorizontalProductScrollModel;
 import com.example.medifacts.R;
-import com.example.medifacts.SliderAdapter;
 import com.example.medifacts.SliderModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
@@ -45,7 +36,10 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private RecyclerView categoryRecyclerView;
     private CategoryAdapter categoryAdapter;
-    private RecyclerView testing;
+    private RecyclerView homePageRecyclerView;
+    private HomePageAdapter adapter;
+    private List<CategoryModel> categoryModelList;
+    private FirebaseFirestore firebaseFirestore;
 
 
 
@@ -58,41 +52,30 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         categoryRecyclerView.setLayoutManager(layoutManager);
 
-        final List<CategoryModel> categoryModelList = new ArrayList<CategoryModel>();
-        categoryModelList.add(new CategoryModel("link","Home"));
-        categoryModelList.add(new CategoryModel("link","Devices"));
-        categoryModelList.add(new CategoryModel("link","Covid Essentials"));
-        categoryModelList.add(new CategoryModel("link","Fitness"));
-        categoryModelList.add(new CategoryModel("link","Ayush"));
-        categoryModelList.add(new CategoryModel("link","Mom's Care"));
-        categoryModelList.add(new CategoryModel("link","Upload Prescription"));
-        categoryModelList.add(new CategoryModel("link","Consult Doctor"));
-        categoryModelList.add(new CategoryModel("link","Lab Tests"));
 
+        categoryModelList = new ArrayList<CategoryModel>();
         categoryAdapter = new CategoryAdapter(categoryModelList);
 
         categoryRecyclerView.setAdapter(categoryAdapter);
-        categoryAdapter.notifyDataSetChanged();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        ////Banner Slider
-        List<SliderModel> sliderModelList = new ArrayList<SliderModel>();
+        firebaseFirestore.collection("CATEGORIES").orderBy("index").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                categoryModelList.add(new CategoryModel(documentSnapshot.get("icon").toString(),documentSnapshot.get("categoryName").toString()));
+                            }
+                            categoryAdapter.notifyDataSetChanged();
+                        }else {
+                            String error = task.getException().getMessage();
+                            Toast.makeText(getContext(),error,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
-        sliderModelList.add(new SliderModel(R.mipmap.red_email,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.custom_error,"#077AE4"));
 
-        sliderModelList.add(new SliderModel(R.mipmap.cart_black,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.profile_placeholder,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.home_icon,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.green_email,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.red_email,"#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.custom_error,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.cart_black,"#077AE4"));
-
-
-        ////Banner Slider
 
 
         //horizontalProduct Layout
@@ -114,26 +97,54 @@ public class HomeFragment extends Fragment {
         //horizontalProduct Layout
 
         ///////////////////
-        testing = view.findViewById(R.id.home_page_recycler_view);
+        homePageRecyclerView = view.findViewById(R.id.home_page_recycler_view);
         LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
         testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        testing.setLayoutManager(testingLayoutManager);
+        homePageRecyclerView.setLayoutManager(testingLayoutManager);
 
-        List<HomeViewModel> homeViewModelList = new ArrayList<>();
-        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
-        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ff0000"));
+        final List<HomeViewModel> homeViewModelList = new ArrayList<>();
+        adapter = new HomePageAdapter(homeViewModelList);
+        homePageRecyclerView.setAdapter(adapter);
+
+        firebaseFirestore.collection("CATEGORIES")
+                .document("HOME")
+                .collection("TOP_DEALS").orderBy("index").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                if ((long)documentSnapshot.get("view_type") == 0){
+                                    List<SliderModel> sliderModelList = new ArrayList<>();
+                                    long no_of_banners = (long)documentSnapshot.get("no_of_banners");
+                                    for (long x = 1; x < no_of_banners + 1; x++){
+                                        sliderModelList.add(new SliderModel(documentSnapshot.get("banner_"+x).toString(),
+                                                documentSnapshot.get("banner_"+x+"_background").toString()));
+                                    }
+                                    homeViewModelList.add(new HomeViewModel(0,sliderModelList));
+                                }else if ((long)documentSnapshot.get("view_type") == 1){
+                                    homeViewModelList.add(new HomeViewModel(1,documentSnapshot.get("strip_ad_banner").toString()
+                                            ,documentSnapshot.get("strip_ad_background").toString()));
+
+                                }else if ((long)documentSnapshot.get("view_type") == 2){
+
+                                }else if ((long)documentSnapshot.get("view_type") == 3){
+
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            String error = task.getException().getMessage();
+                            Toast.makeText(getContext(),error,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
-        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
-        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ffffff"));
         homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
         homeViewModelList.add(new HomeViewModel(3,"Deal of the Day",horizontalProductScrollModelList));
-        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
-        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#fff000"));
 
 
-        HomePageAdapter adapter = new HomePageAdapter(homeViewModelList);
-        testing.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
 
         /////////////////////
 

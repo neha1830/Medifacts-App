@@ -1,14 +1,14 @@
 package com.example.medifacts;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.example.medifacts.ui.home.HomePageAdapter;
 import com.example.medifacts.ui.home.HomeViewModel;
@@ -33,26 +33,6 @@ public class CategoryActivity extends AppCompatActivity {
 
         categoryRecyclerView = findViewById(R.id.category_recyclerview);
 
-        ////Banner Slider
-        List<SliderModel> sliderModelList = new ArrayList<SliderModel>();
-
-        sliderModelList.add(new SliderModel(R.mipmap.red_email,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.custom_error,"#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.mipmap.cart_black,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.profile_placeholder,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.home_icon,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.green_email,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.red_email,"#077AE4"));
-
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.custom_error,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.mipmap.cart_black,"#077AE4"));
-
-
-        ////Banner Slider
-
 
         //horizontalProduct Layout
 
@@ -76,13 +56,10 @@ public class CategoryActivity extends AppCompatActivity {
         categoryRecyclerView.setLayoutManager(testingLayoutManager);
 
         List<HomeViewModel> homeViewModelList = new ArrayList<>();
-        homeViewModelList.add(new HomeViewModel(0,sliderModelList));
-        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ff0000"));
+
         homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
-        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#ffffff"));
         homeViewModelList.add(new HomeViewModel(2,"Deal of the Day",horizontalProductScrollModelList));
         homeViewModelList.add(new HomeViewModel(3,"Deal of the Day",horizontalProductScrollModelList));
-        homeViewModelList.add(new HomeViewModel(1,R.mipmap.upload_prescription,"#fff000"));
         homeViewModelList.add(new HomeViewModel(3,"Deal of the Day",horizontalProductScrollModelList));
 
 

@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     @Override
     public void onBindViewHolder(@NonNull SliderAdapter.SliderViewHolder holder, int position) {
-        int resource = sliderModelList.get(position).getBanner();
+        String resource = sliderModelList.get(position).getBanner();
         String container = sliderModelList.get(position).getBackgroundColor();
 
         holder.setBanner(resource);
@@ -54,8 +56,8 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             banner = itemView.findViewById(R.id.banner_slide);
             bannerContainer = itemView.findViewById(R.id.banner_container);
         }
-        void setBanner(int resource){
-            banner.setImageResource(resource);
+        void setBanner(String resource){
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.mipmap.home_icon)).into(banner);
         }
         void setBannerContainer(String container){
             bannerContainer.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(container)));
