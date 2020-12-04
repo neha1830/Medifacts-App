@@ -3,10 +3,16 @@ package com.example.medifacts;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +33,7 @@ public class MyCartFragment extends Fragment {
     public MyCartFragment() {
         // Required empty public constructor
     }
-
+    private RecyclerView cartItemsRecyclerView;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -59,6 +65,22 @@ public class MyCartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_cart, container, false);
+        View view= inflater.inflate(R.layout.fragment_my_cart, container, false);
+        cartItemsRecyclerView = view.findViewById(R.id.category_recyclerview);
+        LinearLayoutManager layoutManager= new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        cartItemsRecyclerView.setLayoutManager(layoutManager);
+
+        List<CartItemModel> cartItemModelList = new ArrayList<>();
+
+        cartItemModelList.add(new CartItemModel(0,R.drawable.ayurveda,"Ayurveda",2,"Rs.1800/-","Rs.2000/-",1,0,0));
+        cartItemModelList.add(new CartItemModel(0,R.drawable.ayurveda,"Ayurveda",0,"Rs.1800/-","Rs.2000/-",1,0,0));
+        cartItemModelList.add(new CartItemModel(0,R.drawable.ayurveda,"Ayurveda",1,"Rs.1800/-","Rs.2000/-",1,0,0));
+        cartItemModelList.add(new CartItemModel(1,"Price(2 items","Rs.3600/-","free","Rs.200/-","Rs.3600/-"));
+
+        CartAdaptor cartAdaptor=new CartAdaptor(cartItemModelList);
+        cartItemsRecyclerView.setAdapter(cartAdaptor);
+        cartAdaptor.notifyDataSetChanged();
+        return view;
     }
 }

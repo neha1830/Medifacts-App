@@ -28,8 +28,11 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    private static final int HOME_FRAGMENT = 0;
+    private static final int CART_FRAGMENT=1;
     private FrameLayout frameLayout;
+    private static int currentFragment;
+    private NavigationView navigationView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView =findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
@@ -69,13 +72,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         frameLayout = findViewById(R.id.main_framelayout);
-//        setFragment(new HomeFragment());
+        setFragment(new HomeFragment(),HOME_FRAGMENT);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        if (currentFragment==HOME_FRAGMENT){
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
+
         return true;
     }
 
@@ -95,9 +101,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if (id == R.id.main_notification_icon){
             return true;
         }else if (id == R.id.main_cart_icon){
+            myCart();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void myCart() {
+        invalidateOptionsMenu();
+        setFragment(new MyCartFragment(),CART_FRAGMENT);
+        navigationView.getMenu().getItem(3).setChecked(true);
     }
 
     @Override
@@ -105,13 +118,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = menuItem.getItemId();
 
         if (id == R.id.nav_home){
-
+            setFragment(new HomeFragment(),HOME_FRAGMENT);
         }else if (id == R.id.nav_my_orders){
 
         }else if (id == R.id.nav_my_rewards){
 
         }else if (id == R.id.nav_my_cart){
-
+            myCart();
         }else if (id == R.id.nav_my_wishlist){
 
         }else if (id == R.id.nav_my_account){
@@ -125,9 +138,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-//    private void setFragment(Fragment fragment){
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(frameLayout.getId(),fragment);
-//        fragmentTransaction.commit();
-//    }
+    private void setFragment(Fragment fragment,int fragmentNo){
+        currentFragment = fragmentNo;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(frameLayout.getId(),fragment);
+        fragmentTransaction.commit();
+    }
 }
