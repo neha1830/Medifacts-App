@@ -28,6 +28,7 @@ import com.example.medifacts.ProductDetailsActivity;
 import com.example.medifacts.R;
 import com.example.medifacts.SliderAdapter;
 import com.example.medifacts.SliderModel;
+import com.example.medifacts.UploadPrescriptionActivity;
 
 import java.util.List;
 import java.util.Timer;
@@ -220,6 +221,14 @@ public class HomePageAdapter extends RecyclerView.Adapter {
         private void setUploadPrescription(String resource, String color) {
             Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.mipmap.home_icon)).into(uploadPrescription);
             uploadPrescriptionContainer.setBackgroundColor(Color.parseColor(color));
+
+            uploadPrescriptionContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent uploadPrescriptionIntent = new Intent(itemView.getContext(), UploadPrescriptionActivity.class);
+                    itemView.getContext().startActivity(uploadPrescriptionIntent);
+                }
+            });
         }
     }
 
